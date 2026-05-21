@@ -49,4 +49,27 @@ Executable File Formats
 > https://www.linkedin.com/posts/hnaser_recently-learned-that-compiled-executable-activity-7125897574854610944-5S05
 
 
+The anatomy(剖析) of the process
+
+> linkerd
+
+java -> rust
+
+Program
+
++ Code is compiled and linked for a CPU
++ Produces executable file program
++ Only works on that CPU architecture
++ At rest it follows an executable file format
++ Lives on disk
+
+Process
+
+
+
+
+mold A Modern Linker
+
+> https://github.com/rui314/mold
+
 

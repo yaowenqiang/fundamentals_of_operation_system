@@ -65,6 +65,14 @@ Program
 
 Process
 
++ When a program is run,we get a process
++ Process lives in Memory
++ Uniquely identified with an id
++ Instruction pointer/Program counter
++ Process Control Block(PCB)
+
+
+
 
 
 
@@ -72,4 +80,7 @@ mold A Modern Linker
 
 > https://github.com/rui314/mold
 
-
+> clang -S -O0 demo.c
+> b main 然后 run
+> (lldb) disassemble
+> disassemble -b -m

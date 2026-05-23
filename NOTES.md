@@ -84,3 +84,22 @@ mold A Modern Linker
 > b main 然后 run
 > (lldb) disassemble
 > disassemble -b -m
+
+> gcc -S test.c -o test.s
+> gcc -g -S test.c -o test.s # enable debug
+
+> gdb test
+> gdb> info registers
+> gdb> pc # program counter
+
+Cost time
+
++ Register access 1ns
++ L1 Cache - 1ns
++ L2 Cache - 2ns
++ L3 Cache - 7ns
++ L4 Cache - 15ns
++ Main Memory - 100ns
++ SSD - 150us
++ HDD - 10ms
+

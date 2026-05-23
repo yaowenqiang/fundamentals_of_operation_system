@@ -103,3 +103,64 @@ Cost time
 + SSD - 150us
 + HDD - 10ms
 
+Stack 
+
++ Stack is a brilliant data structure
++ Function has local variables
++ Each function gets a frame
++ Grows from high to low
++ Stack space is limited
+
+Stack Pointer
+
++ Move using pointers
++ Stack Pointer(CPU Register)
++ Allocate,deallocate memory
++ Points at the end
+
+Base Pointer
+
++ Stack pointer changes
++ Need a fixec reference
++ Base Pointer(frame pointer)
+  + Also a CPU register
++ To reference variable a, use bp
++ Varible b is bp -4
+
+Nested Calls
+
++ Main calls func1
++ Main pauses, func1 executes
++ Base and stack pointer change
+
+Function returns
+
++ Set sp back
++ Deallocate , sp = sp + 12
++ Main is now active
++ But where in main should we go?
+
+Return Address
+
++ Main has still work to do 
++ It called func1 but lost it's place
++ Need to store return address
++ Which becomes the pc
++ Stored in link register in CPU
+
+Summary
+
++ Stack grous from high to low
++ Used for function calls
++ Stack variables die quickly.(Watch out for pointers)
++ Works with CPU registers, bp(base pointer), sp(stack pointer), lr(link pointer), pc(program counter)
+
+
+
+
+
+
+
+
+
+

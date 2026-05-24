@@ -158,6 +158,86 @@ Summary
 
 
 
+Stack overflow
+
++ Protect against infinite function calls
+  + Recursion
+  + Large local variables
++ Stack has a limit
++ Limit can be overridden by compiler
+
+Data Section
+
++ Stores static and global variables
++ Refreenced directly by memory address
++ Read only and read write 
++ All functions can access
++ Fixed size, like code setion
+
+> erlang hot swap
+
+Heap section
+
++ Store large data
++ Remain until explicitly removed
++ A llfunctions can access
++ Dynamic, grows low to high
++ malloc, free ,new
+
+Pointers
+
++ Point to a memory address in th heap
++ A pointer can in stack, data or heap
++ Stores the address of first byte
++ Pointer type helps determine size
+
+
+
+Memory leaks
+
++ Free the heap memory is important
++ We get memory leak in the heap
++ Losing a pointer in the stack when function returns
++ Refcounting, Garbage collection
+
+Dangling pointers(double free)
+
++ Memory freed but active pointers exist
++ Leads to errors segfault
++ fun2 frees *b 0x333333 and returns
++ func1 tries to use *a but fails
+
+Performance
+
++ Stack has built in memory menagement
++ Stack variables are close together
++ Stack space Limited
++ Heap is random
++ Cache locality in Stack
+
+
+> CPU cache line
+
+> https://www.youtube.com/watch?v=qo1FFNUVB-Q
+> Google Patches Linux kernel with 40% TCP performance
+> https://www.phoronix.com/news/Linux-6.8-Networking
+
+
+Escape analysis
+
++ allocates in the stack when possible
++ Go ,Java
+
+Program Break
+
++ Where the process ends
++ Points to the top of the heap
+
+
+
+
+
+
 
 
 

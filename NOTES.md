@@ -345,3 +345,121 @@ Note about Allignment
 > objdump -t a.out
 > otool -L a.out
 > readelf -d ./a.out 
+
+Virtual Memory
+
+
+Limitations of Physical memory
+
++ Fragmentation
++ Shared Memory
++ Isolation
++ Large Programs
+
+Fragmentation
+
++ One space
++ Memory must be contiguous
+
+External vs Internal Fragmentation
+
++ Memory allocation happens in blocks
++ External fragmentation
++ Internal fragmentation
+
+
+Internal fragmentation
+
++ Fixed-allocated blocks
++ Internal space is wasted
++ OS doesn't know the space is unused
++ Happens with fixed-size blocks,especially large size
+
+Virtual memory and fragmentation
+
++ Let us use fixed block size call it paging
++ Each process has virtual address space
++ We map logical page to physical page
++ Mapping stored in process page table
++ Page size is often 4kb
++ Many to 1
+
+ Page Tables
+
++ Another layer requires translation
++ Map virtual address to physical
++ Page table has its Mapping
++ Each process has its own page table
++ Page table is stored in memory
+
+> translation lookaside buffer
+
+Shared Memory
+
++ Sharing memory is a challenage
++ Spin 5 processes of the same program
++ All Processes have same code
++ Losts of duplicated memory
+
+Share memory and Virtual Memory
+
++ With virtual memory, we load th code once and we map all virtual pages to the same physical address!
+
+Shared Libraries
+
++ Most processes use Libraries
++ OS loads the library code once
++ Map the virtual page to the library physical code
++ Libc
++ /proc/[iid]/maps
+
+Use cases for shared memory
+
++ Multi-processes/multi-threading
++ Databases shared buffers
++ NGINX/PROXIES
++ forking
++ CoW - copy on write
+
+> each thread has its own stack when multi-threading
+
+
+Isolation
+
++ Physical memory addresses tells process where it is
++ Process can attempte to load an address they aren't supposed to
++ Virtual memory solves this
++ Each process has full virtual address
++ Most of it isn't mapped
+
+Isolation with Virtual Memory
+
++ Process A address 1000 is different from Process B's 1000
++ They point to different physical address
++ Process has no way to reference specific physical addresses directly
+
+Not enough memory
+
++ Physical memory has a limit
++ If i load too many processes, we ran out of memory
++ So we fail to spin up new processes
++ But virtual memory helps
+
+Limitation of Virtual Memory
+
++ Additional layer of translation(CPU can't read virtual addresses)
++ More maintenance(page tables)
++ Page faults(Kernel mode switch)
++ More complex CPU architecture(MMU/TLB)
++ TLB cache misses(MySQL 8.x vs 5.x)
+
+
+DMA(Direct Memory Access)
+
+
+
+
+
+
+
+

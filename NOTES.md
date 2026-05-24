@@ -232,15 +232,116 @@ Program Break
 
 + Where the process ends
 + Points to the top of the heap
++ Using brk, sbrk to allocate/deallocate
+
+Summary
+
++ Stores large data
++ Remain until explicitly removed
+
+> https://www.youtube.com/watch?v=UH7wkvcf0ys
+> Facebook and memcached - Tech Talk
+
+> https://www.calculator.net/
+
+
+
+Memory Management
+
+Memory
+
++ Store data
++ Volatile
+  + RAM - Random access memory
++ No-Volatile
+  + ROM - Read Only Memory
+
+Static RAM
+
++ SRAM
++ Complex, expensive but fast
+  + 1 bit -> 1 flip flop -> 6 transistors
++ Flip-flops, constant power
++ Used in CPU caches, SSDs
++ Access is always fast
+
+Dynamic RAM
+
++ DRAM
++ Abundant, cheapter, but slower
+  + 1 bit -> 1 capacitor, 1 transistor
++ Capacitors, lose their state
++ Need to be refreshed
++ Access is slow
+
+> sense amplifier
+
+
+Asynchronous DRAM
+
++ Asynchronous is slow(missed cycles)
++ Wasted clock signals
++ Cycle wasted on refresh
 
 
 
 
 
+Sasynchronous DRAM
+
++ SDRAM
+
+Double Data Rate
+
++ DDR SDRAM
++ Two transfers per cycle
++ Up and down
+
+DDR4 SDRAM
+
++ 64 data lines, 64 pins
++ DDR4 Prefetch buffer = 8 bit per io pin
++ CPU often needs 64 bytes min
++ Called a burst
+
+DDR5 SDRAM
+
++ Two channels, 32 pins each
++ DDR5 Prefetch buffer = 16 bit per pin
+
+DRAM Internals
+
++ DIMM
++ Bank
++ Rows
++ Cells(1 cell 1 bit)
+
+> https://arxiv.org/abs/2004.02354
+> https://github.com/dramdig/DRAMDig
 
 
+Open a row
+
++ Bank has many rows(e.g. 32K)
++ A row has many columns(e.g. ~1024)
++ A column has many cells(e.g. ,16,32 bits)
++ Each cell is a capacitor storing 1 bit(0, or 1)
++ Can only have one opened row in a bank
++ Slow
++ Many banks help
 
 
+Read/Write from memory
 
+> MMU
 
+Note about Allignment
 
++ Data types are aligned
++ 1,4, or 8 bytes
++ Certain sizes are placed in specific addresses
++ E.e. 4 bytes place in addressed divisible by 4
+
+> objdump -t a.out
+> otool -L a.out
+> readelf -d ./a.out 

@@ -456,6 +456,50 @@ Limitation of Virtual Memory
 
 DMA(Direct Memory Access)
 
+Peripherals  Read
+
++ Data from network/disk must pass through CPU
++ Keyboard -> CPU -> RAM
++ Network -> CPU -> RAM
++ Slow at times with large transfers
+
+
+> interrupt service routine
+
+DMA
+
++ Allow direct access from network/disk to RAM
++ DMA controller initializeds the operation
++ Start the direct transfer
+
+Note about DMA
+
++ Must be Physical addresses
++ DMA doesn't often have MMU
++ Knows nothing of the virtual memory
++ kernel allocated memory must not be swapped
++ IOMMU(allows IO)
+
+O_DIRECT
+
++ Very important option in file systems and Databases
++ Allows bypassing the file system cache
++ Direct from disk to user-space(database)
++ Uses DMA
+
+Pros and Cons
+
++ Efficient transfers
++ No VM Management
++ Less CPU overhead
++ But security concerns and complexity
++ Initialization Cost
++ Can't be used for interrupts(Keyboard/mouse), CPU is faster
+
+
+> DMA Attack
+> SAP hana
+
 
 
 

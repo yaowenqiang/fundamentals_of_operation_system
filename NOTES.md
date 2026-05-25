@@ -501,6 +501,22 @@ Pros and Cons
 > SAP hana
 
 
+Inside the CPU
+
+> ALU
+
+CPU Components
+
+
++ ALU(Arthmetic logic unit)
++ CU(Control Unit)
++ MMU(Memory management Unit)
++ Registers
++ Caches(L1, L2, L3)
++ Bus 
+
+
+
 
 
 

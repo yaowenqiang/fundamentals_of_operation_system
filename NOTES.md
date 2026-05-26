@@ -515,6 +515,47 @@ CPU Components
 + Caches(L1, L2, L3)
 + Bus 
 
+> DSM(Distributed Shared memory)
+
+> Non-uniform memory access
+
+ALU
+
++ Arithmetic Logic Unit
++ Arithmetic +-*/
++ Logic XOR/OR/AND
++ Core of compute
+
+CU
+
++ Control Unit
++ Fetches Instructions
++ Decodes Instructions
++ Executes Instructions
+
+Registers
+
++ Small ultrafast unit of storeage
+  + 32 or 64 bit
++ In the CPU core
++ Many registers types
++ PC, IR, SP, BP
++ General purpose
+
+MMU
+
++ Memory management Unit
++ Responsible for memory access
++ translating virtual to physical address
+  + TLP translation Lookaside buffer
+  + TLB must* be flushed on context switch
+
+
+> memchr
+
+
+
+
 
 
 

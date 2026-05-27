@@ -553,8 +553,43 @@ MMU
 
 > memchr
 
+> zns
+
+> zoned Namespaces SSDs disrupting the storage industry
 
 
+L caches
+
++ L1,L2,L3
++ L1 local to core
+  + 1 ns, ~128kb
++ L2 local to core
+  + 5 ns, ~256~2MB
++ L3 shared between all cores
+  + 15 ns, ~64 MB
++ Main Memory
+  + 50-100 ns
+
+
+> 查看 L1 数据缓存大小
+> sysctl hw.l1dcachesize
+
+> 查看 L1 指令缓存大小
+
+> sysctl hw.l1icachesize
+
+> 查看 L2 缓存大小：
+
+> sysctl hw.l2cachesize
+
+> sysctl -n machdep.cpu.brand_string
+
+> system_profiler SPHardwareDataType
+ 
+
+> lscpu | grep -i "cache" # on linux 
+
+> download intel processor identification utility on windows
 
 
 

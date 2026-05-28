@@ -569,6 +569,13 @@ L caches
   + 15 ns, ~64 MB
 + Main Memory
   + 50-100 ns
++ Memory reads are cached at all levels
++ L1 cache is two types
+  + L!D(Data) and L1I(instructions)
+  + CU can fetch data and instructions at same time
++ L2, L3 unified
++ Cache invalidation challenges
++ Some CPUs only have L1, and L2(shared)
 
 
 > 查看 L1 数据缓存大小
@@ -592,7 +599,52 @@ L caches
 > download intel processor identification utility on windows
 
 
+Show L caches
 
+> sysctl -a | grep cachesize
+
+Show number of cores
+
+> sysctl -n hw.physicalcpu
+
+Show CPU architecture
+
+> uname -m
+
+
+
+CPU architecture
+
++ RISC - Reduced Instruction Set
+  + Simple instructions - each single task - singel cycle
+  + Low power, predictable
+  + Use registers
+  + Arm
++ CISC - Complex Instruction Set
+  + One instruction, lots of tasks, multiple cycle
+  + More power, unpredictable
+  + x86(Intel/AMD)
+
+CISC vs RISC - Example
+
++ Example a = a + b, where b and a are integers
++ CISC - 1 instruction
+  + ADD a,b (a and b haere are addresses)
+  + Takes two memory locations
+  + Reads, adds then store in a 
++ RISC - 4 instructions
+  + ldr r0,a
+  + ldr 41, b
+  + add r0,r1
+  + str a1, r0
+
+Clock Speed
+
++ How many cycles per second
++ e.g. 3GHz = 3 billion clock cycles per second
++ In RISC could mean 3 billion instructions per second
++ Less then CISC
++ Remember cost of fetching/decoding(pipelining helps)
 
 
 

@@ -647,6 +647,18 @@ Clock Speed
 + Remember cost of fetching/decoding(pipelining helps)
 
 
+Instruction Life Cycle
+
+Fetch, Decode, Execute, Read, Write
+
+Instruction
+
++ Fetch from memory(MMU)
++ Decode(CU)
++ Execute(ALU)
++ Memory read(optional)
++ Write(to register/memory)
+
 
 
 

@@ -659,7 +659,97 @@ Instruction
 + Memory read(optional)
 + Write(to register/memory)
 
+Registers
+
+Basic General purpose registers
+
+32-bits
+
++ EAX
++ EBX
++ ECX
++ EDX
 
 
+EAX is a dword which is 4 bytes(32 bits)
+AX is a word which is 2 bytes(16 bits)
+AH is a byte(8 bits)
+AL is also a byte(8 bits)
+
+If EAX = 0x12345678
+
+AX = 5678
+AH = 56
+AL = 78
+
+
+64 bits
+
++ RAX
++ RBX
++ RCX
++ RDX
+
+RAX is qword which is 8 bytes(64 bits)
+EAX is a dword which is 4 bytes(32 bits)
+AX is a word which is 2 bytes(16 bits)
+AH is a byte (8 bits)
+AL is also a byte (8 bits)
+
+
++ String Index registers
+  + ESI - Source Index
+  + EDI - Destination Index
++ Instruction pointers
+  + EIP - indicates the memory current address of current instruction
++ Stack Frame Pointers
+  + ESP - address of top of stack
+  + EBP - address of bottom of stack
+
+MOV Instructions
+
+syntax
+
++ MOV(mnemonic 记忆的，助记的) Destination, Source
++ Copies data from Source to Destination
++ Example:
+  + mov eax, 0x3A
+  + mov al, 0x8
+  + mov ebx, eax
+  + mov cx, bx
+  + mov ah, cl
+
+
+Basic Arithmetic
+
+
++ Add Destination, source 
++ Destination <- Destination + source
++ add eax, ecx
++ add edi, 0x2a
++ add cs, si  - partical register
+
+Dword registers
+
++ mov esi, 0x1
++ mov eax, 0x2
++ mov ebx, 0x3
++ add eax, ebx
++ add eax, eax
++ mov esi, 0xffffff 
++ add ebx, esi # 3 + ffffffff = 100000002 ,1 will be dropped
++ add esi, eax # 1 0000 0009 1 will be truncated
+
+> wrap-around 
+
+Partial Registers
+
++ mov edi, 0xab29ffff
++ mov ecx, 0x00000703
++ mov eax, 0x000000ff
++ add al, ch # 07 + ff = 106 = 06 in al,1 will be dropped
++ add di, cx # 0703 + ffff = 10702 = 0702 
++ mov edi, 0xAB29ffff
++ add edi, ecx # 0x00000703 + 0xAB29ffff = 0xab2a0702
 
 

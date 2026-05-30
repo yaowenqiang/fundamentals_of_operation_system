@@ -752,4 +752,73 @@ Partial Registers
 + mov edi, 0xAB29ffff
 + add edi, ecx # 0x00000703 + 0xAB29ffff = 0xab2a0702
 
+Basic Arithmetric SUB instruction
 
++ Sub  Destination, sourceo
++ Destination <- Destination - source
++ sub eax, edx
++ sub edi, 0x2a
++ sub cl, dl
+
+
++ mov eax, 0x1a
++ mov ebx, 0x3
++ mov ecx, 0x2
++ sub eax, ebx 
++ add eax, ebx
++ sub ecx, ebx # ffffffff
++ add ecx, eax
++ sub cl,al
+
+INC and DEC instruction
+
++ INC register
++ register <- register - 1
++ inc eax
++ eax <- eax + 1
+
++ DEC register
++ register <- register - 1
++ dec si
++ si <- si - 1
+
+
++ mov eax, 0xfffffffe
++ inc eax
++ inc al
++ dec al
++ inc ax
++ dec ax
++ inc eax
++ inc eax
+
+MUL(multiply) instructions
+
++ mul register
++ ax <- al . register
++ dx:ax <- ax. register
++ edx:eax <- eax . register
+
+> edx:eax means that edx and eax are concatenated together
++ Note that the size of the result is twice the size of the argument
+
++ mul ecx
+  + edx:eax <- eax * ecx
++ mul si
+  + dx:ax <- ax * si
++ mul al
+  + ax <- al * al
++ mul 0x6b <- invalid
+
+
+```
+mov edx, 0xAB1e2fff
+mov eax, 0x3
+mov ecx, 0x2
+mul ecx #( eax * ecx ) = 6 = edx:eax  = 00000000 00000006
+mul ecx #( eax * ecx ) = 12 = 00000000 0000000c
+mov ax, 0xeeee 
+mul ax # eeee * eeee - deff6544 = dx:ax
+mul cl # cl * cl = ax = 00000088 
+
+```

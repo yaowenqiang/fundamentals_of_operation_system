@@ -924,3 +924,52 @@ mov dword ptr ds:[0xmemory address], eax # 54332211
 
 Moving data to memory and patchin memory
 
+mov dword ptr ds:[0xmemory address], 0x2
+
+patch memory
+
+二进制 -> 编辑 
+
+Stack
+
+PUSH value 
+
+esp <- esp -4
+
+dword [esp] -< value
+
+
+POP register
+
+register <- dword[esp]
+esp <- esp + 4
+
+
+
+```
+mov eax, 0x35a626
+mov ebx, 0x100404
+mov ecx, 0x000047
+push eax
+push ebx
+push ecx
+```
+
+
+
+```
+mov eax, 0x35a626
+mov ebx, 0x100404
+mov ecx, 0x000047
+push eax
+push ebx
+push ecx
+inc eax
+inc ebx
+inc ecx
+pop ecx
+pop ebx
+pop eax
+```
+> (last in first out)
+

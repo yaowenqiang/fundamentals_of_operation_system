@@ -820,5 +820,79 @@ mul ecx #( eax * ecx ) = 12 = 00000000 0000000c
 mov ax, 0xeeee 
 mul ax # eeee * eeee - deff6544 = dx:ax
 mul cl # cl * cl = ax = 00000088 
+```
+
+DIv (divide) Instructions
+
+(byte reg)
+
++ DIV register
++ al <- ax / register
++ ah <- ax % register
+
+
+Word reg
+
++ ax <- dx:ax / register
++ dx <- dx:ax % register
+
+dWord reg
+
+eax <- edx:eax / register
+edx <- edx:eax % register
+
+div ch
+
+al <- ax / ch (quotient)商
+ah <- ax / ch (remainder)
+
+div esi
+
+eax <- edx: eax / esi(quotient)
+edx <- edx:eax % esi (remainder)
+
+div di
+
+ax <- dx:ax / di(qoutient) 商
+dx <- dx:ax % di(remainder)
+
+div 0x8c Invalid
+
+
+Exceptions
+
+division by 0
+
+eg mov eax, 0x3
+   mov edx, 0x0
+   mov ecx, 0x0
+   div ECX
+
+qoutient overflow - if qoutient is too large
+
+eg mov eax, 0x00005678
+   mov edx, 0xffffffff edx:eax is qword ( 8 bytes), very big number   
+   mov ecx, 0x2
+   div ecx
+
+
+```
+mov ecx, 0x2
+mov edx, 0x0
+mov eax, 0x8
+div ecx
+inc ecx
+div ecx
+
+```
+
+```
+mov ebx, 0x3a
+mv edx, 0x20
+mov eax, 0x0
+div ebx
+div bx
+mov bl,0xfe
+div bl
 
 ```

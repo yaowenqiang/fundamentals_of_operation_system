@@ -973,3 +973,14 @@ pop eax
 ```
 > (last in first out)
 
+Pushing constants and strings to the stack
+
+```
+push 0x1234567
+
+# null terminator 00
+
+first select the memory address and edit the content of the memory then
+push 0x1234567 # the string address
+
+```

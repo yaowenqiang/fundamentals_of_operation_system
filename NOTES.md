@@ -880,7 +880,7 @@ eg mov eax, 0x00005678
 mov ecx, 0x2
 mov edx, 0x0
 mov eax, 0x8
-div ecx
+div ecx # ecx/edx:eax rax (qoutient) + edx(remainder)
 inc ecx
 div ecx
 
@@ -888,11 +888,39 @@ div ecx
 
 ```
 mov ebx, 0x3a
-mv edx, 0x20
+mov edx, 0x20
 mov eax, 0x0
-div ebx
-div bx
+div ebx # edx:eax / ebx = 8d30 cb0b  eax=8d30cb0b edx=00000030
+div bx # dx:ax / bx = ax(qoutient) dx(remainder)
 mov bl,0xfe
-div bl
+div bl = ax / bl = al(qoutient) + ah(remainder)
+
 
 ```
+
+How to write to write to memory and from memory(date segment)
+
+mov eax, 0x2
+
+mov dword ptr ds:[0xmemory address], eax # move the value of eax into the memory address
+
+mov ebx, dword ptr ds:[0xmemory address] # read from memory
+
+
+> ds means data segment
+
+inc eax
+mov dword ptr ds:[0xmemory address], eax
+
+> little endian 
+
+
+mov eax, 0x11223344
+mov dword ptr ds:[0xmemory address], eax # 44332211
+mov ebx, dword ptr ds:[0xmemory address] 
+inc eax # 11223345
+mov dword ptr ds:[0xmemory address], eax # 54332211
+
+
+Moving data to memory and patchin memory
+

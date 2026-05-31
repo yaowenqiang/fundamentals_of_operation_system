@@ -975,6 +975,8 @@ pop eax
 
 Pushing constants and strings to the stack
 
+> https://www.asciitable.com/
+
 ```
 push 0x1234567
 
@@ -984,3 +986,44 @@ first select the memory address and edit the content of the memory then
 push 0x1234567 # the string address
 
 ```
+
+Intro to Function Calls
+
+> https://www.tutorialspoint.com/c_standard_library/c_function_printf.htm
+
+
+x86 calling convention(1 parameter)
+
+c 
+
+function(parameter 1);
+
+Assembly:
+
+push parameter1
+call function
+
+
+```
+call 0x11111111 # the addres of print function
+
+```
+
+Calling with 2 parameters
+
+C
+
+function(parameter1,parameter2)
+
+Assembly
+
+push parameter2
+push parameter1
+call function
+
+printf("hello, %s", string);
+
+push string
+push "hello, %s"
+call printf
+

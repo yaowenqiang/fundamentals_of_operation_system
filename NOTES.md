@@ -1027,3 +1027,46 @@ push string
 push "hello, %s"
 call printf
 
+
+```
+1337 (10) -> 539 (16) -> 37 05 (in memory) -> 537 (in stack)
+
+```
+
+x86 calling convertion(3 parameters)
+
+C
+
+function (parameter1, parameter2, parameter3);
+
+Assembly
+
+push parameter3
+push parameter2
+push parameter1
+call function
+
+Getting input using sanf() function
+
+scanf() for input of numbers
+
+int number:
+
+scaf("%d", number);
+
+"%d" = format specifiter
+
+%&number = address-of number variable
+
+
+scanf() for input of strings
+
+char str[32];
+scanf("%s", %str);
+
+
+"%s" = format specifiter
+
+str = address-of str
+
+

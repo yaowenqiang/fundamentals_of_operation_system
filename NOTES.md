@@ -1069,4 +1069,22 @@ scanf("%s", %str);
 
 str = address-of str
 
+Code caves
+
+What is a code cave?
+
++ blank memory area in the .TEXT segment
++ .TEXT segment is Executable region
++ Therefore any code injected here will execute
+
+> HxD 
+> PE-bear
+
+> virtual memory > raw ( file memory)
+
+> 0000 = null bytes 
+
+
+
+jmp 0xcodecaveaddress
 

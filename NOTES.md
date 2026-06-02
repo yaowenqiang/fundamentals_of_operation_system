@@ -1088,3 +1088,14 @@ What is a code cave?
 
 jmp 0xcodecaveaddress
 
+TODO
+
+intro to functions that returns a value
+
+
+function return values normals stored at EAX register
+
+```
+push "hello world"
+call strlen
+```

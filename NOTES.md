@@ -1088,7 +1088,15 @@ What is a code cave?
 
 jmp 0xcodecaveaddress
 
-TODO
+code cave example
+
+
+```
+push 0xaddressofstring
+call addressofprintfunction
+
+```
+> 0A is new line hex code
 
 intro to functions that returns a value
 

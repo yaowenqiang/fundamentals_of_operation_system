@@ -1096,6 +1096,16 @@ push 0xaddressofstring
 call addressofprintfunction
 
 ```
+
+```
+printf(" Enter firstname:");
+scanf("%s\n", firstname);
+printf(" Enter lastname:");
+scanf("%s\n", lastname);
+printf("Hello, %s, %s", firstname, lastname)
+
+```
+
 > 0A is new line hex code
 
 intro to functions that returns a value

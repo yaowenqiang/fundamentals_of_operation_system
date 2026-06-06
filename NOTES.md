@@ -1117,3 +1117,109 @@ function return values normals stored at EAX register
 push "hello world"
 call strlen
 ```
+
+
+Flags Registers
+
+CF = Carry Flag(进位/借位标志)
+ZF = Zero Flag(溢出标志)
+SF = Sign Flag（符号标志)
+OF = Overflow Flag(零标志)
+
+
+Each flag can only be either 1 or 0
+
+
+ZF(The Zero Flag)
+
++ ZF is set to 1 when the last calculation results is zero
++ ZF is clared to 0 when the last calculation results is non-zero
++ For example:
+  + mov eax, 0x8
+  + mov ecx, 0x8
+  + sub eax, ecx
++ After the sub instruction, ZF is set to 0
++ Another example:
+  + mov eax,0x6
+  + mov ecx,0x6
+  + add eax,ecx
++ After the add instruction, ZF will be cleared to 0
+
+SF(The Sign Flag)
+
++ SF equals the most significant bit of the last calculation
++ Use in Two's Complement Number Representation
+  + SF = 0 mean positive
+  + SF = 1 means negative
++ For example:
+  + move edx, 0
+  + dec eds
++ SF = 1, because edx = 0xffffffff = 1111....1111
++ Anothe example:
+  + mov edx, 0
+  + inc edx
++ SF = 0 because edx =0x00000001 = 0000...0001
+
+CF(The Carry Flag)
+
++ CF=1, if the addition of two numbers causes a carry out of the most significant bit, A wrap-around has occurred.
++ Example:
+  + mov eax, 0xffffffff
+  + add eax, 0x1
++ eax = 0
++ CF = 1
++ Means the result you get from the addition is wrong
++ The CF will also be set to 1 if a substraction requires a borrow from the most significant bit, a wrap-around also occurs.    
++ Example:
+  + mov ecx, 0x0
+  + mov edx, 0x3
+  + sub ecx, edx
++ ecx=0xfffffffD
++ CF = 1
++ The CF will be cleared to 0 if no Carry occurs, No wrap-arounds
++ Example:
+  + mov eax, 0x2
+  + mov ecx, 0x8
+  + add eax, ecx
++ eax=0xa
++ CF = 0
+
+OF(The Overflow Flag)
+
++ if we assume the number are two complements representation (signed numbers), then
++ The OF is set to 1 if:
+  + the addition of two positive numbers -> negative result
+  + The addition of two negative numbers -> positive result
+  + positive - negative -> negative result
+  + negative - positive -> positive result
++ If the OF = 1, it means the result you get from the calculation is wrong
++ Another example:
++ mov eax, 0x7fffffff 0111 1111 1111 1111 1111 1111 1111 1111
++ mov edx, 0x1        0000 0000 0000 0000 0000 0000 0000 0001
++ add eax, edx        1000 0000 0000 0000 0000 0000 0000 0000
++ eax = 0x80000000
++ OF = 1
+
++ Another example:
++ mov eax, 0x7fffffff 0111 1111 1111 1111 1111 1111 1111 1111
++ mov edx, 0x1        0000 0000 0000 0000 0000 0000 0000 0001
++ sub eax, edx        0111 1111 1111 1111 1111 1111 1111 1110
++ eax = 0x7ffffffe
++ OF = 0
+
+ When to look at CF or OF
+
++ Both CF (Carry Flag) and OF(Overflow Flag) will change in every arithmetic operation
++ Depending on how the numbers are being interpreted, you will then look either at the CF flag or the OF flag
++ If you program is using unsigned numbers, then you will be concerned with the CF flag
++ But if your program works with signed numbers, then you will care about the OF flag
+
+In summary
+
++ The ZF flag set to 1 if the last result was zero
++ The SF flag is set to 1 if the last result was negative
++ The CF flag is set to 1 if the result (assuming you interpret the numbers as unsignedA is wrong)
++ The OF flag is set to 1 if the result (assuming you interpret the numbers as signed) is wrong
+
+
+

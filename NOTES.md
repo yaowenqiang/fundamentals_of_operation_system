@@ -1287,5 +1287,94 @@ If you do not specify an -mcpu option, then GCC will use its built-in default on
 PI, EMMC
 
 
+## Process vs Thread
+
+Process
+
++ An instance of a program
++ Has Dedicated code, stack, heap, data section
++ Has context in the CPU(pc, lr, etc.)
++ Process Control Block
+
+Process Control Block(PCB)
+
++ Kernel needs metadata about the process
++ PCP contains
+  + PID, Process state, Program counter, registers
+  + Process control info(running/stopped, priority)
+  + Page Table(Virtual memory to pyhsical mapping)
+  + Accounting(CPU/Memory usage)
+  + Memory management info(Pointer to code/stack, etc)
+  + IO info(File desceriptors)
+  + IPC info, semaphores, mutexes, shared memory,messages,
+
+Kernel Process Table
+
++ Kernel needs to menage processes
++ A mapping table from PID to PCB
++ Process Table
++ Quick lookup
++ In kernel space
+
+Thread
+
++ A thread is a light weight process
++ Shared code/heap,data and PCB
++ stack is different and PC
++ Thread Stack lives in same VM
+
+> Why Threads are a bad idea(for most purposes)
+
+> https://web.stanford.edu/~ouster/cgi-bin/papers/threads.pdf
+
+Thread Control Block(TCP)
+
++ Kernel needs metadata about the thread
++ TCP contains:
+  + TID, Thread state, Program counter, registers
+  + Process Control info(running/stopped, priority)
+  + Accounting(CPU/memory usage)
+  + Memory management info(Pointer to stack, etc.)
+  + Pointer to parent PCB
+
+Kernel Thread Table
+
++ Kernel needs to manage threads
++ A mapping table from TID to TCB
++ Thread Table
++ Quick lookup
++ In kernel space
+
+Shared Memory
+
++ Multiple processes/threads can share memory
++ mmap
++ Virtual memory different, physical memory same
++ Shared Buffers in databases
+
+Postgres Processes
+
+
++ Postgres uses processes
++ Should Postgres move to threads?
++ Long running discussions
+
+
+Fork
+
++ Fork creates a new process
++ Child must have new virtual memory
++ But OS use COW so pages can be shared unless a write happens
++ Redis Asynchronous durability
+
+> Shared memory is another exception. If the parent mmap with shared memory, the fork will not do a CoW but share the same memory instead
+
+
+Python CoW Bug
+
++ Python bug None,True, False
++ Refcounting was constantly updated
++ Forks were triggering CoW
+
 
 

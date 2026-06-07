@@ -1441,4 +1441,79 @@ Summary
 + Context is saved or loaded(thus switched)
 + Threads are more efficient in context switch
 
+## Concurrency - split your program into processes or threads
+
+CPU time is precious
+
++ CPU commodity
++ Need to keep it busy
++ Can one task be split to concurrent tasks
+
+
+CPU Bound vs IO bound workload
+
++ CPU Bounded workload mostly use CPU
+  + Encryption, Compression, DB planning, sorting, Protocol Parsing(HTTP/2, QUIC)
+  + We want to limit starvation of those
++ IO Bound workload is mostly does IO
+  + Database queries, network connection write/read, file reads/writes
+
+Multi-threaded vs Multi-process
+
++ Multi-process
+  + Spin multiple processes
+  + Isolated
+  + e.g. NGINX,Postgres
++ Multi-threaded
+  + parent process spins multiple threads
+  + Share memory with parent
+  + E.G. MySql,libuv
+
+  Concurrency issues
+
++ With Concurrency comes chanllenges
++ Two threads touching the same variable(thread safety)
++ Two processes writing to the same shared memory
++ Two threads,both increments a global varible
++ T1 reads a value 1, T2 reads a value 1
++ T1 increments a in register, T2 also increments
++ T1 stores 2 to memory, t2 also stores 2 (should be 3)
+
+Mutexes
+
++ Mutex is binary lock(mutual exclusion)
++ Thread 1 acquires a mutex succeeds
++ Thread 2 try to aqcquire the same mutex, waits(blocks)
++ Thread 1 does the change and release
++ Thread 2 immediatedly unblocke, gets the mutex and change
+
+
+> UNIX Systems for Modern Architectures
+
+
+Mutexes Gotchas
+
++ Mutex has ownership
++ The thread that locks Mutex MUST unlock
++ IF a thread terminates the mutex can remain locked
++ Can cause deadlock
+
+Two-phase locking
+
+Semaphores
+
++ Semaphores can be used for mutual exclusion
++ Signal increments, Wait decrements(atomically)
++ Wait blocks when samaphore = 0
++ Any thread with access to the semaphore can signal/wait
+
+Summary
+
++ Concurrent programming improves performance
++ Can use processes or threads
++ Channenging as need to deal with race conditions
++ Using Mutex/Semaphores help
+
+
+
 

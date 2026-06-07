@@ -1377,4 +1377,68 @@ Python CoW Bug
 + Forks were triggering CoW
 
 
+## Context Switching - A critical OS function
+
+CPU Process
+
++ CPU doesn't really know what a process is
++ OS loads data into CPU registers.(pc,sp, bp, etc.)
++ Pointer to Page Table mapping(pbr)
++ Called "Context"
++ Executes instructions
+
+Context Switching
+
++ To switch "context" we save current context and load new context
++ "Save" the current registers to current process PCB(Memory write)
++ "Load" the new process PCB to CPU registers(Memory load)
++ pc, bp, sp, lr, ptbr and more
+
+TLB flush
+
++ TLB stores virtual memory mapping cache
++ Processes CANNOT share VM mapping
++ Slow
++ Threads of same process are faster to switch
+  + Same memory, paging
+  + As long as threads of the same process 
+
+TLB(Translation Lookaside Buffer，转换后备缓冲器) ASID(地址空间标识符)
+
++ Address space id
++ Identify the process in the TLB
++ 255 values
++ Avoid TLB flushing on context switch 
++ ARM/Intel
+
+When does context switch happens
+
++ Scheduling algorithms
++ Preemptive multitasking
++ IO wait
+
+Preemptive multitasking(抢占式多任务处理)
+
++ Some processes run for a long time
++ OS must switch those out
++ Time slice
++ Windows 3.1 bug where other processes starve
+
+Scheduling algorithms
+
++ What processes/threads get what CPU core for how long
++ Many papers have been written on this topic
++ Complex and hard to find a faire algorithm
++ You want to schedule threads of same process on the same core
++ First come first serve
++ Shortest Job First
++ Round Robin
+
+Summary
+
++ Context is an OS concept
++ CPU execute instructions only
++ Context is saved or loaded(thus switched)
++ Threads are more efficient in context switch
+
 

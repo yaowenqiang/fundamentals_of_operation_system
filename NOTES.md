@@ -1223,3 +1223,69 @@ In summary
 
 
 
+
+## Pipelining and Parallelism - Making CPU efficient
+
+CPU mostly idle
+
++ Notice how parts of the CPU are mostly idle
++ Pipeling helps
++ While decoding, we can fetch another instruction
++ While ALU executing, we can decode another instruction
+
+## Parallelism
+
+
++ App can spin multiple processes/threads
++ Each go into it in a CPU core
+
+
+## Hyper threading
+
++ Sharing cores
++ Hyper threading exposes a single core as multiple logical cores
++ Dedicated registers(e.g pc) shared CPU/ALU、L Cache
+
+SIMD
+
++ Single Instruction Multiple data
++ With a single instruction add multiple values
++ Vectors
++ Instead of executing 4 instructions
+  + 1 in struction on 4
++ Gaming/DB Btrees
++ E.G. ARM Neon
+
+Traditional
+
+Add a1, b1
+Add a2, b2
+Add a3, b3
+Add a4, b4
+
+SIMD
+
+add [a1, a2,s3, a4] ， [b1,b2, b3, b4]
+
+
+### Enabling auto-vectorization in GCC compiler
+
+To enable automatic vectorization in GCC, use the command line options:
+
+> -ftree-vectorize
+> -mfcpu=neon
+> -mcpu to specify the core or architecture
+
+Compiling at optimization level -o3 implies -ftree-vectorize 
+
+If you do not specify an -mcpu option, then GCC will use its built-in default one, The resulting code might run slowly or not run at all.The option -ftree-vectorize is available for many architecture that support SIMD operations
+
+### PSI - Perssure Stall Information
+
+> postgres# insert into test select * from generate_series(10000000000);
+
+PI, EMMC
+
+
+
+

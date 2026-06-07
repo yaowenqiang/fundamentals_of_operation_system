@@ -1514,6 +1514,98 @@ Summary
 + Channenging as need to deal with race conditions
 + Using Mutex/Semaphores help
 
+> top -p pid1, pid2
+> cat /proc/3574511/maps, find heap
+> cat /proc/3574511/smaps, find Share_Dirty
+
+## Storage management
+
+> https://www.youtube.com/watch?v=gxxeZum6BjE
+
+> https://blog.allegro.tech/2024/03/kafka-performance-analysis.html
+
+> https://dropbox.tech/infrastructure/increasing-magic-pocket-write-throughput-by-removing-our-ssd-cache-disks
+
+### Persistent Storeage
+
+Persistence
+
++ RAM is volatile, if power goes we lost data
++ Need to persist data for certain use cases
++ Megantic Tape, HDD,SDD, Flash
+
+HDD
+
++ HDD consistes of platters, heads, tracks and sectors
++ Traditionally the OS addressed using CHS method
+  + Cylinder/Head/sectors
++ Geometrical Sector vs Disk sector
++ The OS 'knows' the physical layout of the HDD
+
+LBA
+
++ Later OS exposes a new API LBA
++ Logical Block Addressing
++ The entire disk is an array of blocks
++ Disk Controller does the "Translation"
++ Additionsl Cost but disks can be imporved
+
+SSD
+
++ SDD uses NAND technology
++ Physical Page(4 KB, 16 KB etc)
++ Physical Block(collection of pages)
++ Min read/write is page, erase by block
++ Logical blocks maps to pages(Flash translation layer)
+
+SDD Write
+
++ We want to write to LBA 1
++ We find a free physial block and map it
++ Write 4 KB to LBA 1
++ Now we want to update LBA 1 with new content
++ No update in SSD,its a remove and add
+
+SSD Write - Update
+
++ LBA 1 is now maps to PPA B
++ A is marked invalid(must be reased before used)
++ Can't erase a single page
+
+SSD Write - More Update
+
++ We continue writing
++ LBA 1 points to D
++ F,G and H are used by 6,7 and 8
++ One more update to LBA 1 
++ LBA 1 noe points to E
++ One more update to LBA 1 but eveyrthing is full
++ Entire block is now invalid we can safely erase it
+
+SSD Write Garbage collection
+
++ Firest erase block
++ Then we update LBA 1
 
 
+SSD Write Amplification
+
++ Now we have LBA 1 points to A
++ E is invalid
++ This is called Write amplification
++ We wanted to do a single write but end up doing more
+
+Wear Leveling( 磨损均衡)
+
++ NAND clls have write limit
+  + Write endurance / program
++ Cold vs hot pages
+  + Page written once and never touched
+  + While other pages are updated all the time
++ Some pages will die before others
+
+
+
+
+> Shingled magnetic recording
 

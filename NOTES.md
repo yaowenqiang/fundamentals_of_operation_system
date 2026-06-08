@@ -1597,12 +1597,30 @@ SSD Write Amplification
 
 Wear Leveling( 磨损均衡)
 
-+ NAND clls have write limit
++ NAND cells have write limit
   + Write endurance / program
 + Cold vs hot pages
   + Page written once and never touched
   + While other pages are updated all the time
 + Some pages will die before others
+
+
+Over-provisioning(预留空间)
+
++ SSD over-provision an area for GC/WL
++ Cold pages are move to OP
++ Erase cold block
++ Move hot pages
+
+Mismatch block to page size
+
++ LBA doesn't have to match page size!
++ e.g. LBA = 4KB and Page is 8 kb
++ Mapping to addresses in a page 
++ Causes issues
+
+
+
 
 
 

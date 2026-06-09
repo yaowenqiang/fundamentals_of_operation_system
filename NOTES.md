@@ -1627,3 +1627,19 @@ Mismatch block to page size
 
 > Shingled magnetic recording
 
+
+## File Systems - layer above storage
+
+### File System
+
++ An abstradction above present storage
++ Users like files/directories
++ Writing and reading to a file translates to blocks
++ Promotes caching
++ Must allocate a block(1 or more LBAs)
+
+
+
+
+
+

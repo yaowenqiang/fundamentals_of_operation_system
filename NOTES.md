@@ -1588,7 +1588,7 @@ SSD Write Garbage collection
 + Then we update LBA 1
 
 
-SSD Write Amplification
+SSD Write Amplification(写入放大)
 
 + Now we have LBA 1 points to A
 + E is invalid
@@ -1638,8 +1638,41 @@ Mismatch block to page size
 + Promotes caching
 + Must allocate a block(1 or more LBAs)
 
+### Examples of File Systems
+
++ FAT(FAT16, FAT32)
++ NTFS
++ APFS(Apple File System)
++ EXT4
++ XFS
++ btrfs
+
+### Some terminologies
+
++ PBA - Physical Block Address - internal to the drive 
+  + aka physical sector size
++ LBA - Logical Block Address - Exposed to OS
+  + aka logical sector size 
++ File System Block Size
+  + minimum read/write size by the fs
++ 1PBA -> 1 ore more LBAs
++ 1 FS Block  = 1 or more LBAs
+
+> MMC(MultiMediaCard)
+
+> lsblk -o NAME,PHY-SEC,LOG-SEC
 
 
+> diskutil info /dev/disk0
+
+> writing amplifying(写入放大)
+
+### FAT32 
+
++ File Allocation Table
++ Basic idea is Array of 32 bit integers
++ The index is the LBA(or logical Sector traditionally)
++ The content is teh next LBA, until we reach end
 
 
 

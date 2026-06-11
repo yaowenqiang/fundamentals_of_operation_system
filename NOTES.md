@@ -1674,5 +1674,37 @@ Mismatch block to page size
 + The index is the LBA(or logical Sector traditionally)
 + The content is teh next LBA, until we reach end
 
+### 32 bit is really 28
+
++ We need to reserve some bits
++ End of chain, is dirty, free, other uses
++ LBA = 512 byte(the old standard)
++ So we can only address 2^28 * 512 bites ~= 128 GB！
++ Very low! So we need to play a trick
++ Meet clusters
+
+### Clustering
+
++ Cluster is a logical grouping of LBAs(aka blocks)
++ LBA size = 512 byte
++ E.g. 8 LBAs = 1 cluster(4 KB)
++ E.g. Cluster 0 -> LBAs 0-7, Cluster 1 -> LBA 8-15(C*8)
++ We can address much more (~1 TB)
++ The larger the cluster, the more disk we can address
++ But create more internal fragmentation
++ Wasted space, can't be use by others
+
+### Blocks everywhere
+
++ When formatting a file system, you specify a file system block size
++ Must not exceed virtual page size 1024, 2048, 4096 bytes
++ LBA size = logical sector block
++ PBA size = Physical sector block(on device)
++ Fs block maps to collections of LBAs(derived like clusters)
+
+
+> nvme-read
+
+
 
 

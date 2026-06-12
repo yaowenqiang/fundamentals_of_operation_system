@@ -1702,8 +1702,82 @@ Mismatch block to page size
 + PBA size = Physical sector block(on device)
 + Fs block maps to collections of LBAs(derived like clusters)
 
-
+BA
 > nvme-read
+
+
+### OS Page Cache
+
++ File system blocks read from disk are cached
++ Block number maps to virtual memory page
++ FS Block <= OS VM Page(often)
++ Reads checks hte cache first then disk and updates cache
++ Writes go to the cache first, then disk
++ Block number maps to LBAs
+
+> lseek system call
+ 
+> fsync fdatasync - syschronize a files's in-core state with storage device
+
+### OS Page Cache(Write)
+
++ User wants to write block 7
++ OS writes to the page cache creating a new entry
++ Later the OS flushes the page cache to disk
++ OR until fsync() is called
+
+### Page Cache woes
+
++ Faster reads
+  + two apps can page cche files
++ Can cause corruption
+  + Write goes to cache then OS crashes
+  + Torn database pages
+
+### File Modes
+
++ A file must be opened to be used
++ Different modes in open
++ Some examples
++ O_APPEND - append mode
++ O_DIRECT - skips page cache
++ O_SYNC - write always flushes cache(slow)
+
+> mysql innodb_flush_method
+> postgres wal_sync_method(enum)
+
+### Partitions
+
++ Disks are exposed as big array of LBAS(logical sectors)
++ partitions start from LBA and end in an LBA
++ Provides logical segmentation
++ E.g. Partition 1 is LBA 1 - LBA 4
++ Each partition can have its own FS
++ Each FS different Block size(cluster)
+
+### Partition Allignment
+
++ Partition starting at an odd LBA
++ Say 8 LBAs map to 1 PBA
++ FS BLock Size is 8 LBAs
++ Partition starts at LBA 2
++ One fs block is 2-9 LBAs
+  + Means PBA 1 & PBA 2
++ overlapping!
++ Performance issues
+
+### Moving File System
+
++ Success moves of the file Systems
++ Allegro moved their Kafka from ext4 to XFS
++ The cost of journal commits
++ Metadata updates
+
+
+
+
+
+
 
 
 

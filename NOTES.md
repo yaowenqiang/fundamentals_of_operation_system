@@ -1773,6 +1773,233 @@ BA
 + The cost of journal commits
 + Metadata updates
 
+### Read example
+
++ Read entire file 'test.dat', 5000 bytes
++ Logical sector size 4096, physical sector size 4096
++ Page size 4096
++ File system block 4096
++ 1 Block = 1 LBA(sector)
++ Two blocks:
+  + One full block and
+  + Another block with 1000 bytes
+
+### Read file blocks
+
++ Issue read command on the file
++ The OS reads the file system metadata
++ Find the start block, follow until end of file
++ Block 6,3(Still need LBAs)
+
+### Check teh page cache
+
++ Query the OS file system page cache
++ Block 3 is cached but 6 is not
++ Next we send a command to disk controller
+
+Read from disk controller
+
++ The OS sends a read command to the disk
++ Block 6 is LBA 6( 1 Block = 1 LBA)
++ LBA 6, for length 1 
++ Disk controller converts LBA to PBA
++ Returns the data to OS
+
+### OS updates cache
+
++ OS gets the content and update its cache
+
+### OS returns to user
+
++ OS takes content from z,j
++ Z has 4096 bytes, but user only asks for 1000
++ Copies the memory to the user buffer
++ Return success/unblocks
+
+
+## Socket management
+
+### Client-Server Architecture
+
++ machines are expensive, applications are complex
++ Seperate the application into two Components
++ Expensive workload can be done on the server
++ Client call servers to perform expensive tasks
++ Remote procecure call(RPC) was born
+
+
+### Client-Server Architecture Benefits
+
++ Servers have beefy hardware
++ Clients have commodity hardware
++ clients can still perform lightweight tasks
++ Clients no longer require dependencies
++ However, we need a communication model
+
+### OSI(Open System Interconnection) model
+
+Why do we need a communication model?
+
++ Agnostic(通用的) applications
+  + Without a standard model, your application must have knowledge of the underlying network medium
+  + Imagine if you have to author different version of your apps so that it works on wifi vs ethernet vs LET vs fiber
++ Network Equipment Mangement
+  + without a standard model, upgrading network Equipments becomes difficult
++ Decoupled innovation
+  + innovations can be done in each layer separately without affeting the rest of the models
+
+What is the OSI Model
+
++ 7 layers each describe a specific networking component
+
++ Layer 7 - Application - HTTP/FTP/gRPC
++ Layer 6 - Presentation - Encoding, Serialization
++ Layer 5 - Session - Connection establishment, TLS
++ Layer 4 - Transport - UDP/TCP
++ Layer 3 - Network - IP
++ Layer 2 - Datalink - Frames, Mac address Ethernet
++ Layer 1 - physical -  Electric signals, fiber or radio waves
+
+
+> Switch is layer 2 device
+> Router os layer 3 device
+> VPN os layer 3 protocol
+> CDN os layer 7 protocol
+
+The shortcomings of the OSI Model
+
++ OSI Model has too many layers which can be ahrd to comprehend
++ Hard to argue about which layer does what
++ Simpler to deal with Layers 5-6-7 as just one layer, application
++ TCP/IP Model does just that
+
+TCP/IP Model
+
++ Much simpler than OSI just 4 layers
++ Application(Layer 5,6,and 7)
++ Transport(Layer 4)
++ Internet(Layer 3)
++ Data Link(Layer 2)
++ Physical layer is not offcially covered in the model
+
+> fastly
+
+Host-to-Host Communication
+
+Host to Host communication
+
++ I need to send a message from host A to host B
++ Usually a request to do something on host B(RPC)
++ Each host network card has a unique Media Access Control address(MAC)
++ E.g. 00:00:5e:00:53:af
++ A sends a message to B specifying the MAC address
++ Everyone in the network will 'get' the message but only B accept it
++ Imagine millions of machines?
++ We need a way to eliminate the need to send it to everyone
++ The address needs to get better
++ We need routability, meet the IP Address
++ The IP Address is built in two parts
++ One part to identify the network,the other is the host
++ We use the network portion to eliminate many networks
++ The host part is used to find the host
++ Still needs MAC addresses!
+
+But My host have many apps!
+
++ It's not enough just to address the host
++ The host is running many apps each with different requirements
++ Meet ports
++ You can send an HTTP request on port 80, a DNS request on port 53 and and SSH request on port22 all running on the same server!
+
+
+## TCP
+
+TCP
+
++ Stands for Transmission Control Protocol
++ Layer 4 protocol
++ Ability to address processes in a host using ports
++ "Controls" transmission unlike UDP which is a firehose
++ Conection
++ Requires handshake
++ 20 bytes headres Segment(can go to 60)
++ Stateful
+
+TCP Use cases
+
++ Reliable communication
++ Remote shell
++ Database connections
++ Web communications
++ Any bidirectional communication
+
+### TCP Connection
+
++ Connection is a Layer 5(session)
++ Connection is an agreeement between client and server
++ Must create a connection to send data
++ Connection is identified by 4 properties
+  + SourceIp-SourcePort
+  + DestinationIP-DesinationPort
++ Can't send data outside a connection
++ Sometimes called socket or file descriptor
++ Requires a 3-way TCP handshake
++ Segments are sequenced and ordered
++ Segments are acknowledged
++ Lost segments are retransmitted 
+
+
+> multipath TCP
+
+### Multiplexing and demultiplexing
+
++ IP Target hosts only 
++ Hosts run many apps each with different requirements
++ Ports now identify the 'app' or 'process'
++ Sender multiplexes all its apps into TCP connections
++ Receiver demultiplex TCP segments to each app based on connection pairs
+
+### Connection Establishment
+
++ App1 on 10.0.0.1 want to send data to APPX on 10.0.0.2
++ App1 sends SYN to AppX to synchronous sequence numbers
++ AppX sends SYN/ACK to synchronous its sequence number
++ App1 ACs AppX SYN
++ Three way handshake
+
+### Sending data
+
++ App1 sends data to AppX
++ App1 encapsulate the data in a segment and send it
++ AppX acknowledges the segment
++ Hint: Can App1 send new segment before ack of old segment arrives?
+
+### Acknowledgment
+
++ App1 sends segment 1,2 and 3 to AppX
++ AppX acknowledge all of them with a single ACK 3
+
+### Lost data
+
++ App1 sends segment 1,2 and 3 to AppX
++ Seg 3 is lost, AppX acknowledge 3
++ App1 resend Seg 3
+
+### Closing Connection
+
++ App1 wants to close the connection
++ App1 sends FIN, AppX ACK
++ AppX sends FIN, App1 ACK
++ Four way handshake
+
+> TIMEWAIT state
+
+
+
+
+
+
+
 
 
 

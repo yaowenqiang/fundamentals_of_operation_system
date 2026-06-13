@@ -1994,7 +1994,66 @@ TCP Use cases
 
 > TIMEWAIT state
 
+## Sockets, Connections and Queues
 
+Socket
+
++ When a process listens on an IP/Port it produces a socket
++ Socket is a file(at least in linux)
++ The process owns its socket
++ Can be shared during fork
+
+### SYN Queue(半连接队列),Accept Queues(全连接队列)
+
++ When a socket is created, we get two queues with it
++ SYN Queue,stores incoming SYNs
++ Accept Queue, stores completed connections
++ The size of the queues is determined by teh backlog
++ Not really queues but hash tables
+
+### Connection, Receive and Send queue
+
++ Completed connections are placed in the accept queue
++ When a process 'accepts' a connection is created
++ Accept returns a file desc for the connection
++ Two new queues created with the connection
++ Send queue stures connection outgoing data
++ Reeieve queue stores incoming connection data
+
+> ss -lnt
+
+### Connection Establishment
+
++ TCP Three way handshake
++ SYN/SYN+ACK/ACK
++ But what happens on the backend?
++ Server Listens on an address:port
++ Client connects
++ Kernel does the handahake creating a connection
++ Backend process 'Accepts' the connection
++ Kernel crates a socket & two queues SYN and Accept
++ Client send a SYN
++ Kernels adds to SYN queue, replies with SYN/ACK
++ Client reqplies with ACK
++ Kernel finish the connection
++ Kernel removes SYN from SYN queue
++ Kernel adds full connection to Accept queue
++ Backend accpets a connection, removed from accept queue
++ A file descriptor is created for the connection
+
+> SYN cookie
+
+### Problems with accepting connections
+
++ Backend doesn't accept fast enough
++ Clients who don't ACK
++ Small backlog(容量上限)
+
+### Socket sharding
+
++ Normally listening on active port/ip fails
++ But you can override it with SO_REUSEPORT
++ Two distinct sockets different processes on the same ip/port pair
 
 
 

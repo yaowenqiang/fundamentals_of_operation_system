@@ -2298,7 +2298,93 @@ Kernel mode switch
 + Process stats and runtime different from kernel mode
 
 
+## Virtualization and Containerization - Modern OS techniques
 
+One Machine One OS
+
++ Very limiting
++ One machine multiple OS?
++ One at a time(switch at startup)
++ Virtual Machines
++ Containerization(jails)
+
+Multiple native OS
+
++ Many OS on top of the hardware
++ One active at a time
++ Switch in runtime
++ High isolation
+
+Virtualization
+
++ Many OS on top of one base OS
++ Hypervisor control upper os
++ Proxies syscalls to lower kernel
++ Full isolation but lots of redundancy
++ Can limit CPU/Memory for each VM
++ E.g. VMWare,Oracle virtualbox
+
+Containerization
+
++ Containers isolated by namespace
+  + Mount fs namespace
+  + network namespace
+  + Process namespace
++ Limited by cgroups
+  + CPU/Memroy usage
++ all containers share kernel
++ E.G.docker
+
+> nsblk
+
+Namespace
+
++ Kernel feature for isolation
++ Mount namespace -> isolates mounts
++ PID namespace -> isolates processes
++ NIC namespace -> isolates networks
+
+Cgroup(google)
+
++ Control group kernel feature
++ Assigns certain cpu and memory to processes
++ So that containers can't starve others
+
+What happens on a new container?
+
++ New namespaces created
++ It can only see what is mounted
++ Usually a directory in host is created
++ Container get 1 mount to that directory
++ Can't see anything else
++ The OS necessary tools are loaded
++ E.g.ubuntu apt-get,ifconfig etc
++ Then user code/processes are loaded
+  + E.g. node
++ But there is a better way
+
+Overlayfs
+
++ new container gets its copy of base OS tools
++ This will quickly run the disk out
++ Meet overlay fs 
++ Base layer os is read only (shared)
++ Only changes are maintained
+
+Network
+
++ new container gets its own NIC namespace
++ Won't see host NICs(unless explicitly given)
++ Docker often has one network that adds all container to 
++ New container gets a new mac address and get DHCPed
+
+Processes
+
++ New container can spin any number of processes
++ Container can only see its processes
++ PID 1 can exist in al containers, they are isolated
++ Each process has a globalid the base kernel sees
++ PID namespace
 
 
 

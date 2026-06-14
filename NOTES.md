@@ -2254,7 +2254,48 @@ Cross platform
 > conduit
 
 
+## Kernel and User Space (Mode Switch)
 
+### Kernel vs User
+
++ Virtual address of a process two parts
++ Kernel and User
++ Kernel maps to dedicated physial memory
++ User pages map to different physical memory
+  + Page table help the mapping
+
+### Modes
+
++ The CPU can be in user or kernel mode
++ In user mode user code executes
++ When kernel mode kernel mode executes
+  + Syscall, drivers
++ User mode can't access kernel pages
++ Kernel mode can access both
+
+### Kernel mode switch Cost
+
++ System code/stack lives in the kernel area
++ Kernel functions run on the kernel stack
++ Process invoke syscall(e.g. read)
++ CPU is put on kernel mode
++ Happens in page faults(缺页异常/缺页中断)
+
+Kernel mode switch
+
++ Stores current base pointer to kernel stack
++ Stores return address as well
++ Store all user registers/state to memory
++ Once down, user registers are restored
++ User mode activates, execution resumes
+
+### Cost
+
++ Mode switch(store all registers and restore them)
++ Memory access
++ Security check and validation
++ System call number lookup
++ Process stats and runtime different from kernel mode
 
 
 

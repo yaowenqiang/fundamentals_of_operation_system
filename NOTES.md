@@ -2165,6 +2165,98 @@ Cross platform
 + Node(through lib_uv) supports all platforms async io
 
 
+## Compilers and Linkers on programming language
+
++ Program run on machine code
++ Specific to the CPU
++ Each CPU has different instructions set
++ RISC vs CISC
+
+### Assembly
+
++ Closest to the machine code
++ Still sometimes CPU specific
++ Easier to write
++ Not easy enough though
+
+### High level language
+
++ HLL are more convenient
++ Abstractions to hide complexity*
++ Need to compile for a CPU
++ Compile turns code to machine code
++ Linking creates executable file
+
+### Compiling 
+
++ Compile produces machine code in form of object files
++ Each object file may present a source file
++ Object file are note ready to be run
++ They need to be linked and create an executable
++ E.g. gcc,clang, rustc
+
+### Linking
+
++ Linkers creates an executable file
++ Finds and links all object files required and create one file
++ The file is an 'executable'
++ Executable files have types
++ E.g.ld, gold linker, lld, mold(new)
+
+### Executable files formats
+
++ The executable file is a program
++ Specific format so the OS knows how to create process
++ Created by linker
++ Example ELF linux
++ exe PE -> Windows
++ ELF -> linux
++ Mach-O -> Mac
+
+### Interpeted Languages
+
++ Compiled Program doesn't work everywhere
++ Must match the CPU/OS
++ Can i write my code once and run it everywhere?
++ interpeted languages
++ Python/Javascript/Java
++ Must have a runtime, python.exe
++ Python.exe is a compiled program for evey OS/CPU
++ Your code hell.py runs everywhere
+  + Windows python.exe hello.py
+  + Linux ./python hello.py
++ Same for Node and Javascript
++ The trick is each line interpreted
++ If you see "*" do "this",if you see "-" do "this"
++ slower
++ Byte code(not string code)
+
+
+### Just in Time Compilation(JIT)
+
++ I'm interpreting this code a lot
++ Let me compile it directly to machine code
++ Put it on the heap
++ Mark memory as executable
++ Point the CPU program counter to it
+
+### Garbage Collection
+
++ Memory management is tricky
++ Some languages manages it for you
+  + Go,Python,Java
++ Some languages you have to do it
+  + C,C++
++ Garbage collection is part of the runtime
++ Tags every object and tracks it
++ Can cause slow downs
+
+> conduit
+
+
+
+
+
 
 
 

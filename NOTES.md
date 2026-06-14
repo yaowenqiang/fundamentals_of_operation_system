@@ -2055,6 +2055,114 @@ Socket
 + But you can override it with SO_REUSEPORT
 + Two distinct sockets different processes on the same ip/port pair
 
+## Reading and Sending data (Receive vs Send buffers)
+
+### Send and receive buffers
+
++ Client sends data on a connection
++ Kernel puts data in receive queue
++ Kernel ACKs(may delay) and update window
++ App calls read to copy data
+
+> bun zero copy
+
+
+> read index.html -> copy to file system page cache(kernel) -> memoey -> file descriptor
+
+> ssl send file
+
+> Nigel Algorithm
+
+
+### Problems with reading and sending
+
++ Backend doesn't read fast enough
++ Recieve queue is full
++ client slows down
+
+## Socket Programming - patterna(common socket patterns)
+
+
+> node libuv
+
+> ramcloud
+
+## Asynchronous IO - Non blocking reads and writes
+
+Blocking operations
+
++ Read,write and accept are blocking
++ The process cannot move their Program counter
++ Read blocks when no data
++ Accept blocks when no connections
+
+### Asynchronous I/O
+
++ Read blocks when no data in receive buffer
++ Accept blocks when no connections
++ Ready approach
+  + Ask the OS to tell us if a file is ready
+  + When it is ready, we call it without blocking
+  + select,epoll, kqueue
++ Completion approach
+  + Ask the OS(or worker thread to do the blocking io)
+  + When completed notify
+  + IOCp, io_uring
++ Doesn't work with storage files
+
+> cakewalk on mac
+
+### Select(polling)
+
++ Select tasks a collection of file descriptors for kernel to monitor
++ select is blocking(with a timeout)
++ When any is ready, select returns
++ Process checks which one is ready(loop w/FD_ISSET)
++ Process calls read/write/accpet etc. on the file descriptor
+
+### Select pros and cons
+
++ Pros
+  + Avoid reading(unready) resources
+  + async
++ Cons
+  + But slow we have to loop through all of them O(n)
+  + Lots of copying from kernel/user space
+  + Suppports fixed size of file descriptors
+
+### Epoll(eventing)
+
++ Register an intrest list of the fds(once) in the kernel
++ Kernel keeps working and updates the ready list
++ User calls epoll_wait, kernel builds an events array of ready list
+
+> epoll_crate
+> epoll_wait
+
+### Epoll drawbacks
+
++ Complex
+  + Level-triggered vs edge-triggerrd
++ Only in linux
++ Too many syscalls
++ Doesn't work on files
+
+### io_uring
+
++ Based on completion
++ Kernel does the work
++ Shared memory, user puts 'job'
++ kernel does the work and writes results
++ Fast, non-blocking
++ Security is a big issue (shared memory)
++ Google disabled it for now
+
+> google limiting IO_uring due to security vulnerabilities
+
+
+Cross platform
+
++ Node(through lib_uv) supports all platforms async io
 
 
 
